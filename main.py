@@ -12,13 +12,13 @@ def calculator(a: float, b:float) -> str:
     return f"Summan av {a} och {b} är {a + b}"
 
 def main():
-    model = ChatOpenAI(temperature=0)
+    model = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
     
     tools = [calculator]
     agent_executor = create_react_agent(model, tools)
     
-    print("Tjena! Jag är din AI Assistent. Skriv 'Exit' för att avsluta.")
-    print("Du kan be mig utföra matte eller ställa frågor")
+    print("Tjena! Jag är Lennart din AI Assistent!")
+    print("Skriv 'Exit' för att avsluta.")
     
     while True:
         user_input = input("\nDu: ").strip()
@@ -31,7 +31,7 @@ def main():
             {"messages": [HumanMessage(content=user_input)]}
         ):
             if "agent" in chunk and "messages" in chunk["agent"]:
-                for message in chunk["agent"]["message"]:
+                for message in chunk["agent"]["messages"]:
                     print(message.content, end="")
         print()
         
