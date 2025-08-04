@@ -6,27 +6,24 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-@tool
-def calculator(a: float, b:float) -> str:
-    """Användbar för att göra simpel addition matte"""
-    return f"Summan av {a} och {b} är {a + b}"
+#@tool
 
 def main():
     model = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
     
-    tools = [calculator]
+    tools = []
     agent_executor = create_react_agent(model, tools)
     
     print("Tjena! Jag är Lennart din AI Assistent!")
     print("Skriv 'Exit' för att avsluta.")
     
     while True:
-        user_input = input("\nDu: ").strip()
+        user_input = input("\n--Du: ").strip()
         
         if user_input == "Exit":
             break
         
-        print("\nAssistant: ", end="")
+        print("\033[33m\nAssistenten Lennart: \033[0m", end="")
         for chunk in agent_executor.stream(
             {"messages": [HumanMessage(content=user_input)]}
         ):
