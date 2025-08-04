@@ -6,10 +6,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+@tool
+def calculator(a: float, b:float) -> str:
+    """Användbar för att göra simpel addition matte"""
+    return f"Summan av {a} och {b} är {a + b}"
+
 def main():
     model = ChatOpenAI(temperature=0)
     
-    tools = []
+    tools = [calculator]
     agent_executor = create_react_agent(model, tools)
     
     print("Tjena! Jag är din AI Assistent. Skriv 'Exit' för att avsluta.")
