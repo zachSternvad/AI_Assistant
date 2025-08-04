@@ -16,12 +16,19 @@ def main():
     print("Du kan be mig utföra matte eller ställa frågor")
     
     while True:
-        user_input = input("\nYou: ").strip()
+        user_input = input("\nDu: ").strip()
         
         if user_input == "Exit":
             break
         
         print("\nAssistant: ", end="")
         for chunk in agent_executor.stream(
-            {messages: [HumanMessage(content=user_input)]}
-        )
+            {"messages": [HumanMessage(content=user_input)]}
+        ):
+            if "agent" in chunk and "messages" in chunk["agent"]:
+                for message in chunk["agent"]["message"]:
+                    print(message.content, end="")
+        print()
+        
+if __name__ == "__main__":
+    main()
