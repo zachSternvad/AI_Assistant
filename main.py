@@ -3,15 +3,19 @@ from langchain_openai import ChatOpenAI
 from langchain.tools import tool
 from langgraph.prebuilt import create_react_agent
 from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
 
-#@tool
+@tool
+def get_current_time() -> str:
+    """Hämtar nuvarande datum och tid"""
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 def main():
     model = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
     
-    tools = []
+    tools = [get_current_time]
     agent_executor = create_react_agent(model, tools)
     
     print("Tjena! Jag är Lennart din AI Assistent!")
